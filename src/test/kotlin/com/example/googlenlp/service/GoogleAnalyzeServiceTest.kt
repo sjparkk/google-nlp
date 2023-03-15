@@ -17,4 +17,23 @@ class GoogleAnalyzeServiceTest(
         어떤 역량이 제일 중요한지' 묻자 창의성, 혁신, 토론과 윤리적 결정, 데이터를 읽고 판별할 수 있는 능력인 '데이터 리터러시', 협력 등의 답을 내놨다"고 했다.
     """.trimIndent()
 
+    @Test
+    fun `항목 분석`() {
+        val result = googleAnalyzeService.analyzeEntitiesText(textKo)
+
+        for (entity in result.entitiesList) {
+            println("Entity: %s".format(entity.name))
+            println("Salience: %.3f".format(entity.salience))
+            println("Metadata {")
+            for ((key, value) in entity.metadataMap) {
+                println("%s : %s".format(key, value))
+            }
+            println("}")
+            for (mention in entity.mentionsList) {
+                println("Begin offset: %d".format(mention.text.beginOffset))
+                println("Content: %s".format(mention.text.content))
+                println("Type: %s".format(mention.type))
+            }
+        }
+    }
 }
