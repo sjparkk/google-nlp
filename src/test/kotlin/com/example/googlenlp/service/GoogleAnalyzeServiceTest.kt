@@ -1,5 +1,6 @@
 package com.example.googlenlp.service
 
+import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
@@ -35,5 +36,21 @@ class GoogleAnalyzeServiceTest(
                 println("Type: %s".format(mention.type))
             }
         }
+    }
+
+    @Test
+    fun `감정 분석`() {
+
+        val result = googleAnalyzeService.analyzeSentimentText(textKo)
+        val sentiment = result.documentSentiment
+
+        if (sentiment == null) {
+            println("No sentiment found")
+        } else {
+            println("Sentiment magnitude: %.3f".format(sentiment.magnitude))
+            println("Sentiment score: %.3f".format(sentiment.score))
+        }
+
+        println(result)
     }
 }
