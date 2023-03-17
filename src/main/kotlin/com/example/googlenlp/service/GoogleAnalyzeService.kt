@@ -30,4 +30,19 @@ class GoogleAnalyzeService(
         }
     }
 
+    /**
+     * Analyze sentiment text (감정 분석)
+     * @param text
+     */
+    fun analyzeSentimentText(text: String): AnalyzeSentimentResponse {
+
+        languageServiceClient.use { language ->
+
+            val doc = Document.newBuilder().setContent(text)
+                    .setType(Document.Type.PLAIN_TEXT).build()
+
+            return language.analyzeSentiment(doc)
+        }
+    }
+
 }
